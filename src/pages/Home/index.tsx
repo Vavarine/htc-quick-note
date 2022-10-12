@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { AddNote, Note } from "../../components/AddNote";
 import { NotesList } from "../../components/NotesList";
 import { api } from "../../services/api";
+import { Container } from "./styles";
+
+// import { Container } from "./styles.ts";
 
 function Home() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -21,10 +24,10 @@ function Home() {
   }, []);
 
   return (
-    <div>
+    <Container>
       <AddNote onAddNote={handleAddNote} />
       <NotesList notes={notes} />
-    </div>
+    </Container>
   );
 }
 
