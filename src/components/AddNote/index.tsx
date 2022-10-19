@@ -1,7 +1,13 @@
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 import { useState } from "react";
-import { FiCheckSquare } from "react-icons/fi";
+import Placeholder from "@tiptap/extension-placeholder";
 import { api } from "../../services/api";
-import { Container } from "./styles";
+import { Container, SubmitButton } from "./styles";
+import { TextEditor } from "./TextEditor";
+import { OptionsBar } from "./OptionsBar";
+import Underline from "@tiptap/extension-underline";
+import Image from "@tiptap/extension-image";
 
 export type Note = {
   title: string;
@@ -14,7 +20,17 @@ interface AddNoteProps {
 
 export function AddNote({ onAddNote }: AddNoteProps) {
   const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Underline,
+      Image,
+      Placeholder.configure({
+        placeholder: "Criar uma anotação ou lista",
+      }),
+    ],
+  });
 
   const [isAddNoteOpen, setIsAddNoteOpen] = useState(false);
 
@@ -23,7 +39,7 @@ export function AddNote({ onAddNote }: AddNoteProps) {
 
     const note = {
       title: title,
-      text: text,
+      text: editor ? JSON.stringify(editor.getJSON()) : "",
     };
 
     api
@@ -44,6 +60,20 @@ export function AddNote({ onAddNote }: AddNoteProps) {
     setIsAddNoteOpen(false);
   };
 
+  const handleFileAdition = (file: File) => {
+    const formData = new FormData();
+
+    formData.append("image", file);
+
+    console.log(file);
+
+    api.post("/upload", formData).then((response) => {
+      const { data } = response;
+
+      editor?.chain().focus().setImage({ src: data.url }).run();
+    });
+  };
+
   return (
     <Container isOpen={isAddNoteOpen}>
       <div className="backdrop" onClick={handleCloseAddNote}></div>
@@ -53,22 +83,20 @@ export function AddNote({ onAddNote }: AddNoteProps) {
             type="text"
             name="title"
             value={title}
+            placeholder="Crie sua  anotação ou lista..."
             onChange={(e) => {
               setTitle(e.target.value);
             }}
           />
-          <FiCheckSquare />
         </div>
         <div>
-          <textarea
-            name="text"
-            value={text}
-            onChange={(e) => {
-              setText(e.target.value);
-            }}
-          ></textarea>
+          {editor && <TextEditor editor={editor} />}
+          {editor && (
+            <OptionsBar editor={editor} onFileAdition={handleFileAdition}>
+              <SubmitButton type="submit">Salvar</SubmitButton>
+            </OptionsBar>
+          )}
         </div>
-        <button type="submit">Salvar</button>
       </form>
     </Container>
   );

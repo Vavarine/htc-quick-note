@@ -15,20 +15,25 @@ export const GlobalStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-size: 1rem
+    font-size: 1rem;
+
+    color: ${({ theme }) => theme.colors.grey800}
   }
 
   body {
     font-family: 'Barlow', sans-serif;
+    
   }
 
   button {
     border: none;
+    background-color: transparent;
     cursor: pointer;
   }
 
   input, textarea {
-   outline: none 
+    color: inherit;
+    outline: none 
   }
 
   textarea {
