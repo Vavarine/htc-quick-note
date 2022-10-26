@@ -1,13 +1,21 @@
 import { rem } from "polished";
 import styled from "styled-components";
 
-type ContainerProps = {
+export const Container = styled.div`
+  width: 100%;
+  height: ${rem(52)};
+  max-width: ${rem(592)};
+
+  margin-bottom: ${rem(50)};
+`;
+
+type ContentProps = {
   isOpen?: boolean;
 };
 
-export const Container = styled.div<ContainerProps>`
+export const Content = styled.div<ContentProps>`
   width: 100%;
-  max-width: ${rem(592)};
+
   max-height: ${({ isOpen }) => (isOpen ? "calc(100vh - 16rem)" : rem(52))};
 
   border-radius: 10px;
@@ -20,22 +28,7 @@ export const Container = styled.div<ContainerProps>`
 
   form {
     position: relative;
-
     background-color: ${({ theme }) => theme.colors.background};
-
-    z-index: 1;
-  }
-
-  .backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    visibility: ${({ isOpen }) => (isOpen ? "visible" : "hidden")};
-
-    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
   }
 
@@ -45,7 +38,29 @@ export const Container = styled.div<ContainerProps>`
     border: none;
 
     padding-inline: 1rem;
+
+    ::placeholder {
+      color: ${({ theme }) => theme.colors.grey500};
+    }
   }
+`;
+
+type BackdropProps = {
+  isOpen?: boolean;
+};
+
+export const Backdrop = styled.div<BackdropProps>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  opacity: ${({ isOpen }) => (isOpen ? "1" : "0")};
+  visibility: ${({ isOpen }) => (isOpen ? "visible" : "hidden")};
+
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
 `;
 
 export const SubmitButton = styled.button`

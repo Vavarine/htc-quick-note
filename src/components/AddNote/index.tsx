@@ -3,7 +3,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { useState } from "react";
 import Placeholder from "@tiptap/extension-placeholder";
 import { api } from "../../services/api";
-import { Container, SubmitButton } from "./styles";
+import { Backdrop, Container, Content, SubmitButton } from "./styles";
 import { TextEditor } from "./TextEditor";
 import { OptionsBar } from "./OptionsBar";
 import Underline from "@tiptap/extension-underline";
@@ -19,6 +19,7 @@ interface AddNoteProps {
 }
 
 export function AddNote({ onAddNote }: AddNoteProps) {
+  const [isAddNoteOpen, setIsAddNoteOpen] = useState(false);
   const [title, setTitle] = useState("");
 
   const editor = useEditor({
@@ -32,8 +33,6 @@ export function AddNote({ onAddNote }: AddNoteProps) {
     ],
   });
 
-  const [isAddNoteOpen, setIsAddNoteOpen] = useState(false);
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -46,6 +45,7 @@ export function AddNote({ onAddNote }: AddNoteProps) {
       .post("/notes", note)
       .then(() => {
         onAddNote();
+        handleCloseAddNote();
       })
       .catch((err) => {
         console.log(err);
@@ -75,29 +75,31 @@ export function AddNote({ onAddNote }: AddNoteProps) {
   };
 
   return (
-    <Container isOpen={isAddNoteOpen}>
-      <div className="backdrop" onClick={handleCloseAddNote}></div>
-      <form onSubmit={handleSubmit} onClick={handleOpenAddNote}>
-        <div>
-          <input
-            type="text"
-            name="title"
-            value={title}
-            placeholder="Crie sua  anotação ou lista..."
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-          />
-        </div>
-        <div>
-          {editor && <TextEditor editor={editor} />}
-          {editor && (
-            <OptionsBar editor={editor} onFileAdition={handleFileAdition}>
-              <SubmitButton type="submit">Salvar</SubmitButton>
-            </OptionsBar>
-          )}
-        </div>
-      </form>
+    <Container>
+      <Content isOpen={isAddNoteOpen}>
+        <Backdrop isOpen={isAddNoteOpen} onClick={handleCloseAddNote}></Backdrop>
+        <form onSubmit={handleSubmit} onClick={handleOpenAddNote}>
+          <div>
+            <input
+              type="text"
+              name="title"
+              value={title}
+              placeholder="Crie sua  anotação ou lista..."
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+            />
+          </div>
+          <div>
+            {editor && <TextEditor editor={editor} />}
+            {editor && (
+              <OptionsBar editor={editor} onFileAdition={handleFileAdition}>
+                <SubmitButton type="submit">Salvar</SubmitButton>
+              </OptionsBar>
+            )}
+          </div>
+        </form>
+      </Content>
     </Container>
   );
 }
