@@ -8,7 +8,7 @@ import BulletListIcon from "../../../assets/icons/ic_list-bulleted.svg";
 import ImageIcon from "../../../assets/icons/ic_image.svg";
 
 import { Editor } from "@tiptap/react";
-import { Container, OptionButton } from "./styles";
+import { OptionButton, OptionsBarContainer } from "./styles";
 
 interface OptionsBarProps {
   editor: Editor;
@@ -24,7 +24,7 @@ export function OptionsBar({ editor, children, onFileAdition }: OptionsBarProps)
   };
 
   return (
-    <Container>
+    <OptionsBarContainer>
       <OptionButton
         onClick={() => editor.chain().focus().undo().run()}
         disabled={!editor.can().chain().focus().undo().run()}
@@ -81,6 +81,6 @@ export function OptionsBar({ editor, children, onFileAdition }: OptionsBarProps)
         <input type="file" id="image" accept="image/*" onChange={handleImageInputChange} />
       </OptionButton>
       <div>{children}</div>
-    </Container>
+    </OptionsBarContainer>
   );
 }

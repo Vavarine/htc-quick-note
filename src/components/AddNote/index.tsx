@@ -3,16 +3,11 @@ import StarterKit from "@tiptap/starter-kit";
 import { useState } from "react";
 import Placeholder from "@tiptap/extension-placeholder";
 import { api } from "../../services/api";
-import { Backdrop, Container, Content, SubmitButton } from "./styles";
-import { TextEditor } from "./TextEditor";
+import { AddNoteContainer, Backdrop, Content, SubmitButton } from "./styles";
+import { TextEditor } from "../TextEditor";
 import { OptionsBar } from "./OptionsBar";
 import Underline from "@tiptap/extension-underline";
 import Image from "@tiptap/extension-image";
-
-export type Note = {
-  title: string;
-  text: string;
-};
 
 interface AddNoteProps {
   onAddNote: () => void;
@@ -75,7 +70,7 @@ export function AddNote({ onAddNote }: AddNoteProps) {
   };
 
   return (
-    <Container>
+    <AddNoteContainer>
       <Content isOpen={isAddNoteOpen}>
         <Backdrop isOpen={isAddNoteOpen} onClick={handleCloseAddNote}></Backdrop>
         <form onSubmit={handleSubmit} onClick={handleOpenAddNote}>
@@ -100,6 +95,6 @@ export function AddNote({ onAddNote }: AddNoteProps) {
           </div>
         </form>
       </Content>
-    </Container>
+    </AddNoteContainer>
   );
 }

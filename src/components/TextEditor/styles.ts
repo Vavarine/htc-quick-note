@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const TextEditorContainer = styled.div`
   .ProseMirror {
+    max-height: calc(100vh - 16rem);
+
     outline: none;
     padding: 1rem;
+
+    overflow-y: auto;
 
     ul {
       margin-left: 1rem;
