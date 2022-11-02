@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { AddNote, Note } from "../../components/AddNote";
+import { AddNote } from "../../components/AddNote";
 import { NotesList } from "../../components/NotesList";
 import { api } from "../../services/api";
+import { INote } from "../../types/global";
 import { Container } from "./styles";
 
 // import { Container } from "./styles.ts";
 
 function Home() {
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [notes, setNotes] = useState<INote[]>([]);
 
   const handleAddNote = () => {
     fechNotes();
