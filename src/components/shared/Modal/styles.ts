@@ -1,3 +1,4 @@
+import { rem } from "polished";
 import styled, { css } from "styled-components";
 
 interface ModalContainerProps {
@@ -38,7 +39,11 @@ export const ModalContent = styled.div`
   position: relative;
   background-color: ${({ theme }) => theme.colors.background};
 
+  width: 100vw;
+  max-width: ${rem(592)};
+
   border-radius: 10px;
+  overflow: hidden;
 
   z-index: 2;
 `;

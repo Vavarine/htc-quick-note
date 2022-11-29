@@ -11,23 +11,27 @@ function Home() {
   const [notes, setNotes] = useState<INote[]>([]);
 
   const handleAddNote = () => {
-    fechNotes();
+    fetchNotes();
   };
 
-  const fechNotes = () => {
+  const handleNoteEdit = () => {
+    fetchNotes();
+  };
+
+  const fetchNotes = () => {
     api.get("/notes").then((response) => {
       setNotes(response.data);
     });
   };
 
   useEffect(() => {
-    fechNotes();
+    fetchNotes();
   }, []);
 
   return (
     <Container>
       <AddNote onAddNote={handleAddNote} />
-      <NotesList notes={notes} />
+      <NotesList notes={notes} onNoteEdit={handleNoteEdit} />
     </Container>
   );
 }

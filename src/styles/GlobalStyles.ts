@@ -16,13 +16,11 @@ export const GlobalStyles = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-size: 1rem;
-
-    color: ${({ theme }) => theme.colors.grey800}
   }
-
+  
   body {
     font-family: 'Barlow', sans-serif;
-    
+    color: ${({ theme }) => theme.colors.grey800}
   }
 
   button {
@@ -33,7 +31,8 @@ export const GlobalStyles = createGlobalStyle`
 
   input, textarea {
     color: inherit;
-    outline: none 
+    font-family: inherit;
+    outline: none;
   }
 
   textarea {

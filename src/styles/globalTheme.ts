@@ -9,6 +9,8 @@ export const globalTheme = {
     grey300: "#C4C4C4",
     grey500: "#999999",
     grey800: "#727273",
+    grey900: "#212121",
+    danger: "#E3170A",
   },
   fonts: {
     main: "Barlow, sans-serif",

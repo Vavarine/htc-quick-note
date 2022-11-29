@@ -10,11 +10,14 @@ interface NoteBodyProps {
 }
 
 export function NoteBody({ content }: NoteBodyProps) {
-  const editor = useEditor({
-    extensions: [StarterKit, Underline, Image],
-    editable: false,
-    content: isTextJson(content) ? JSON.parse(content) : content,
-  });
+  const editor = useEditor(
+    {
+      extensions: [StarterKit, Underline, Image],
+      editable: false,
+      content: isTextJson(content) ? JSON.parse(content) : content,
+    },
+    [content]
+  );
 
   if (!editor) return null;
 
