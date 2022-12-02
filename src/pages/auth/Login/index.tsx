@@ -10,6 +10,7 @@ import { Input } from "../../../components/auth/Input";
 import { globalTheme } from "../../../styles/globalTheme";
 import { Button } from "../../../components/auth/Button/style";
 import { Title } from "../styles";
+import { useAuth } from "../../../contexts/authContext";
 
 const schema = yup.object().shape({
   email: yup
@@ -33,11 +34,12 @@ export function Login() {
   } = useForm({
     resolver: yupResolver(schema),
   });
+  const { login } = useAuth();
 
   console.log("errors", errors);
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    login(data);
   };
 
   return (

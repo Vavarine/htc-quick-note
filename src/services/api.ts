@@ -1,5 +1,12 @@
 import axios from "axios";
 
-export const api = axios.create({
+const token =
+  localStorage.getItem("@QuickNote:token") || sessionStorage.getItem("@QuickNote:token");
+
+const api = axios.create({
   baseURL: "http://localhost:3333/",
 });
+
+if (token) api.defaults.headers.authorization = `Bearer ${token}`;
+
+export { api };

@@ -10,6 +10,7 @@ import { globalTheme } from "../../../styles/globalTheme";
 import { Button } from "../../../components/auth/Button/style";
 import { SignInContainer } from "./styles";
 import { Title } from "../styles";
+import { useAuth } from "../../../contexts/authContext";
 
 const schema = yup.object().shape({
   name: yup
@@ -25,7 +26,7 @@ const schema = yup.object().shape({
     .string()
     .required("A senha é obrigatória")
     .min(6, "A senha deve conter ao menos 5 caracteres"),
-  passwordConfirmation: yup
+  confirmPassword: yup
     .string()
     .required("A senha é obrigatória")
     .min(6, "A senha deve conter ao menos 5 caracteres")
@@ -42,10 +43,10 @@ export function SignUp() {
     resolver: yupResolver(schema),
   });
 
-  console.log("errors", errors);
+  const { signUp } = useAuth();
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    signUp(data);
   };
 
   return (
@@ -73,14 +74,14 @@ export function SignUp() {
           errorMessage={errors?.password?.message as string}
         />
         <Input
-          name="passwordConfirmation"
+          name="confirmPassword"
           type="password"
           placeholder="Repita sua senha"
           register={register}
-          errorMessage={errors?.passwordConfirmation?.message as string}
+          errorMessage={errors?.confirmPassword?.message as string}
         />
 
-        <Button type="submit">Entrar</Button>
+        <Button type="submit">Registrar</Button>
       </form>
       <p>
         Já tem uma conta <Link to="/login">Fazer login</Link>

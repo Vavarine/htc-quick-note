@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+
 import { AddNote } from "../../components/AddNote";
+import { Header } from "../../components/Header";
 import { NotesList } from "../../components/NotesList";
+import { useAuth } from "../../contexts/authContext";
 import { api } from "../../services/api";
 import { INote } from "../../types/global";
-import { Container } from "./styles";
-
-// import { Container } from "./styles.ts";
+import { HomeContainer, HomeContent } from "./styles";
 
 function Home() {
   const [notes, setNotes] = useState<INote[]>([]);
+  const { user } = useAuth();
 
   const handleAddNote = () => {
     fetchNotes();
@@ -29,10 +31,13 @@ function Home() {
   }, []);
 
   return (
-    <Container>
-      <AddNote onAddNote={handleAddNote} />
-      <NotesList notes={notes} onNoteEdit={handleNoteEdit} />
-    </Container>
+    <HomeContainer>
+      <Header />
+      <HomeContent>
+        <AddNote onAddNote={handleAddNote} />
+        <NotesList notes={notes} onNoteEdit={handleNoteEdit} />
+      </HomeContent>
+    </HomeContainer>
   );
 }
 

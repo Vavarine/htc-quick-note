@@ -12,7 +12,7 @@ export function NotesList({ notes, onNoteEdit }: NotesListProps) {
     <NotesListContainer>
       <List>
         {notes.map((note) => {
-          return <Note note={note} onNoteEdit={onNoteEdit} />;
+          return <Note key={note.id} note={note} onNoteEdit={onNoteEdit} />;
         })}
       </List>
     </NotesListContainer>
